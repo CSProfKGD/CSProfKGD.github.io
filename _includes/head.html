@@ -52,21 +52,17 @@
 <script src="{{ '/assets/js/dark_mode.js' | relative_url }}"></script>
 {% endif %}
 
-<!--  {% if site.enable_google_analytics %} -->
+{% if site.enable_google_analytics %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-42ME6JEHET"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
 
-  gtag('config', 'G-42ME6JEHET');  
+  gtag('config', '{{site.google_analytics}}');
 </script>
-<!-- {% endif %} -->
-
-<!-- 
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
-  gtag('config', '{{site.google_analytics}}'); -->
+{% endif %}
 
 {% if site.enable_panelbear_analytics %}
 <!-- Panelbear Analytics - We respect your privacy -->
