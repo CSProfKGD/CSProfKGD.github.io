@@ -9,6 +9,11 @@ nav: true
  <h4 id="instructor">Instructor</h4>
 
 <dl>
+  <dt><a href="https://www.eecs.yorku.ca/~kosta/Courses/EECS4422-F21/index.html">EECS 4422/5323</a></dt>
+  <dd><strong>Computer Vision</strong>,<br />
+  <em>2021</em> <br />
+  <em>York University</em>.</dd>
+
   <dt><a href="https://www.cs.ryerson.ca/~kosta/CP8309-F2018/index.html">CP 8322</a></dt>
   <dd><strong>Deep Learning in Computer Vision</strong>,<br />
   <em>2018 and 2021</em> <br />
