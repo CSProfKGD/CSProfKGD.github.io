@@ -22,4 +22,6 @@ Associate Editor for the [IEEE Transactions on Pattern Analysis and Machine Inte
 
 I received an Honours BSc in Computer Science from the [University of Toronto](https://web.cs.toronto.edu) and both my MSc (co-supervised by [John Tsotsos](http://www.cse.yorku.ca/~tsotsos/Tsotsos/Home.html) and [Richard Wildes](http://www.cse.yorku.ca/~wildes)) and PhD (supervised by Richard Wildes) degrees in Computer Science from York University.  I was a postdoc in the [GRASP lab](https://www.grasp.upenn.edu) at the [University of Pennsylvania](https://www.upenn.edu) with [Kostas Daniilidis](https://www.cis.upenn.edu/~kostas/).
 
- <strong> Research Interests:</strong> Computer Vision, Deep Learning, Image Processing
+<strong> Research Interests:</strong> Computer Vision, Deep Learning, Image Processing
+
+<strong> I have MSc and PhD openings for fall 2023, if interested please fill out this [survey](https://forms.gle/L3A7U4EDdUTSm8G26).</strong>
