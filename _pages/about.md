@@ -24,4 +24,5 @@ I received an Honours BSc in Computer Science from the [University of Toronto](h
 
 <strong> Research Interests:</strong> Computer Vision, Deep Learning, Image Processing
 
-<strong> I have MSc and PhD openings for fall 2023, if interested please fill out this [survey](https://forms.gle/L3A7U4EDdUTSm8G26).</strong>
+<strong> I have MSc and PhD openings for Fall 2023.  If interested, please fill out this [survey](https://forms.gle/L3A7U4EDdUTSm8G26).  Due to the high volume nature of the
+graduate admissions process, I will not be replying to email inquiries.  If there is a potential fit with my research program, I will contact you.</strong>
