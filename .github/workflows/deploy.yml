@@ -21,14 +21,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
+      - name: Install Jekyll dependencies
+        run: |
+          gem install jekyll github-pages webrick unicode_utils
+          gem install jekyll-email-protect jekyll-feed jekyll-github-metadata
+          gem install jekyll-paginate-v2 jekyll-scholar jekyll-twitter-plugin
+          gem install jekyll-sitemap jemoji
+
+      - name: Build site
+        run: jekyll build --source . --destination ./_site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
