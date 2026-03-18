@@ -1,7 +1,7 @@
 ---
 layout: post
-date: 2022-3-3 15:59:00-0400
+date: 2025-07-01 15:59:00-0400
 inline: true
 ---
 
-Two papers at CVPR 2022
+On sabbatical between July 1, 2025 and June 30, 2026. Visiting Carnegie Mellon (Fall 2025), Ludwig Maximilian University of Munich (Winter 2026), and the University of Zurich (Spring-Summer 2026).
