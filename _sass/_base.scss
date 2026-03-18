@@ -86,6 +86,28 @@ blockquote {
   }
 }
 
+.post .post-title {
+  font-size: clamp(3rem, 4.2vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.post .desc {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  margin-bottom: 1.5rem;
+}
+
+.post article {
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+
+.post article p,
+.post article div.clearfix {
+  line-height: 1.6;
+}
+
 
 // Navbar customization
 
@@ -192,10 +214,13 @@ blockquote {
 
 .news table td {
   font-size: 1rem;
+  line-height: 1.55;
   color: var(--global-text-color);
 }
 
 .news table th {
+  font-size: 0.95rem;
+  line-height: 1.45;
   color: var(--global-text-color);
 }
 
@@ -375,10 +400,15 @@ footer.sticky-bottom {
     margin-bottom: 1em;
   }
   h2 {
+    font-size: clamp(2.1rem, 3.2vw, 3rem);
+    line-height: 1.12;
     margin-bottom: 1rem;
     span {
       font-size: 1.5rem;
     }
+  }
+  .row {
+    margin-bottom: 1.35rem;
   }
   h2.year {
     color: $grey-color-light;
@@ -392,11 +422,46 @@ footer.sticky-bottom {
     display: inline-block;
     background-color: var(--global-theme-color);
     color: white;
-    padding: 0 1rem;
+    padding: 0 0.75rem;
     border-radius: 0.25rem;
-    font-size: 0.875rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    line-height: 1.5rem;
+    line-height: 1.4rem;
+    letter-spacing: 0.02em;
+  }
+  .title {
+    font-size: 1.1rem;
+    line-height: 1.45;
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+  .author {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  .periodical {
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+  .links {
+    margin-top: 0.35rem;
+    a.btn {
+      font-size: 0.82rem;
+      display: inline-block;
+      color: var(--global-text-color);
+      border: 1px solid var(--global-text-color);
+      background-color: transparent;
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+      line-height: 1.2;
+      margin-right: 0.35rem;
+      text-decoration: none;
+      &:hover {
+        color: var(--global-theme-color);
+        border-color: var(--global-theme-color);
+        background-color: var(--global-bg-color);
+      }
+    }
   }
   ol.bibliography {
     list-style: none;
