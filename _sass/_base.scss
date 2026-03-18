@@ -411,6 +411,10 @@ footer.sticky-bottom {
             }
           }
         }
+        abbr.badge {
+          background-color: var(--global-theme-color) !important;
+          color: white !important;
+        }
         .award {
           color: var(--global-theme-color) !important;
           border: 1px solid var(--global-theme-color);
