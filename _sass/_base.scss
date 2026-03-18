@@ -222,6 +222,11 @@ blockquote {
   font-size: 0.95rem;
   line-height: 1.45;
   color: var(--global-text-color);
+  white-space: nowrap;
+  width: 12.5rem;
+  min-width: 12.5rem;
+  padding-right: 1.25rem;
+  vertical-align: top;
 }
 
 // Social (bottom)
