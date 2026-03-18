@@ -388,6 +388,16 @@ footer.sticky-bottom {
     margin-bottom: -2rem;
     text-align: right;
   }
+  .publication-badge {
+    display: inline-block;
+    background-color: var(--global-theme-color);
+    color: white;
+    padding: 0 1rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+  }
   ol.bibliography {
     list-style: none;
     padding: 0;
