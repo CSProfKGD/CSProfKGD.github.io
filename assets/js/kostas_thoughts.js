@@ -46,6 +46,7 @@
     var dateNode = section.querySelector("[data-thought-date]");
     var content = section.querySelector(".kostas-thoughts-card");
 
+    content.style.minHeight = content.offsetHeight + "px";
     content.classList.add("is-changing");
 
     window.setTimeout(function () {
@@ -57,7 +58,13 @@
         dateNode.textContent = "";
         dateNode.hidden = true;
       }
-      content.classList.remove("is-changing");
+
+      window.requestAnimationFrame(function () {
+        content.classList.remove("is-changing");
+        window.setTimeout(function () {
+          content.style.minHeight = "";
+        }, 180);
+      });
     }, 120);
   }
 

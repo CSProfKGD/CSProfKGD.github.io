@@ -239,7 +239,7 @@ blockquote {
   position: relative;
   max-width: 680px;
   margin: 0 auto;
-  padding: 2rem 2.25rem;
+  padding: 1.75rem 2.15rem;
   overflow: hidden;
   background: var(--global-bg-color);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -268,10 +268,11 @@ blockquote {
     font-size: 1.28rem;
     font-weight: 400;
     line-height: 1.62;
+    min-height: 4.8em;
   }
 
   &.is-changing {
-    opacity: 0.42;
+    opacity: 0;
   }
 }
 
@@ -282,7 +283,7 @@ blockquote {
   color: var(--global-theme-color);
   font-size: 8rem;
   line-height: 1;
-  opacity: 0.08;
+  opacity: 0.12;
   pointer-events: none;
 }
 
@@ -291,8 +292,11 @@ blockquote {
   z-index: 1;
   margin: 1.25rem 0 0;
   color: var(--global-text-color-light);
-  font-size: 0.95rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .kostas-thoughts-actions {
@@ -339,11 +343,12 @@ html[data-theme='dark'] {
   }
 
   .kostas-thoughts-card {
-    padding: 1.45rem 1.35rem;
+    padding: 1.25rem 1.2rem;
 
     blockquote {
       font-size: 1.08rem;
       line-height: 1.58;
+      min-height: 4.75em;
     }
   }
 
