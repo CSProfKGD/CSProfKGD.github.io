@@ -1,50 +1,37 @@
 (function () {
   function cleanThoughtText(text) {
-    return text
-      .replace(/^#KostasThoughts\s*/i, "")
+    return String(text || "")
+      .replace(/^\s*#KostasThoughts\s*:?\s*/i, "")
+      .replace(/\bSource:\s*/gi, "")
+      .replace(/https?:\/\/\S+/g, "")
+      .replace(/pic\.twitter\.com\/\S+/g, "")
       .replace(/\s+/g, " ")
       .trim();
   }
 
-  function entryFromElement(element) {
-    var clone = element.cloneNode(true);
-    var dateNode = clone.querySelector("[data-thought-date], time, .date, .post-meta");
-    var date = "";
-
-    if (dateNode) {
-      date = dateNode.getAttribute("datetime") || dateNode.textContent.trim();
-      dateNode.remove();
-    }
-
-    var text = cleanThoughtText(clone.textContent || "");
-    if (!text || text.length < 12) return null;
-
-    return { text: text, date: date };
+  function formatDate(value) {
+    if (!value) return "";
+    var date = new Date(value + "T00:00:00Z");
+    if (Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC"
+    });
   }
 
-  function parseThoughts(html) {
-    var doc = new DOMParser().parseFromString(html, "text/html");
-    var selectors = [
-      "[data-thought]",
-      ".thought",
-      ".kosta-thought",
-      ".kostas-thought",
-      "article blockquote",
-      "main blockquote",
-      "article li",
-      "main li",
-      "article p",
-      "main p"
-    ];
+  function parseThoughts(data) {
+    var posts = Array.isArray(data && data.posts) ? data.posts : [];
     var seen = {};
     var thoughts = [];
 
-    selectors.forEach(function (selector) {
-      Array.prototype.forEach.call(doc.querySelectorAll(selector), function (element) {
-        var thought = entryFromElement(element);
-        if (!thought || seen[thought.text]) return;
-        seen[thought.text] = true;
-        thoughts.push(thought);
+    posts.forEach(function (post) {
+      var text = cleanThoughtText(post.text);
+      if (!text || text.length < 12 || seen[text]) return;
+      seen[text] = true;
+      thoughts.push({
+        text: text,
+        date: formatDate(post.date)
       });
     });
 
@@ -77,15 +64,15 @@
   document.addEventListener("DOMContentLoaded", function () {
     var section = document.querySelector("[data-kostas-thoughts]");
     if (!section) return;
-    var source = section.getAttribute("data-source") || "/kostas-thoughts/";
+    var source = section.getAttribute("data-source") || "/kostas-thoughts/posts.json";
 
-    fetch(source, { credentials: "same-origin" })
+    fetch(source, { credentials: "same-origin", cache: "no-store" })
       .then(function (response) {
         if (!response.ok) throw new Error("Thought source unavailable");
-        return response.text();
+        return response.json();
       })
-      .then(function (html) {
-        var thoughts = parseThoughts(html);
+      .then(function (data) {
+        var thoughts = parseThoughts(data);
         if (!thoughts.length) return;
 
         var button = section.querySelector("[data-another-thought]");
