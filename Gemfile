@@ -9,5 +9,8 @@ gem "jekyll-scholar", group: :jekyll_plugins
 gem "jekyll-twitter-plugin", group: :jekyll_plugins
 gem "jekyll-sitemap", group: :jekyll_plugins
 gem "jemoji", group: :jekyll_plugins
+gem "bigdecimal"
+gem "csv"
+gem "ostruct"
 gem "unicode_utils"
 gem "webrick"
