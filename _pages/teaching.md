@@ -8,10 +8,10 @@ nav: true
 
 <dl>
   <dt><a href="https://www.eecs.yorku.ca/~kosta/Courses/EECS4422/">EECS 4422/5323</a></dt>
-  <dd><strong>Computer Vision</strong>, <em>2021-2025</em>, <em>York University</em>.</dd>
+  <dd><strong>Computer Vision</strong>, <em>York University</em>.</dd>
 
-  <dt><a href="https://www.eecs.yorku.ca/~kosta/Courses/EECS6322/">EECS 6322</a></dt>
-  <dd><strong>Deep Learning in Computer Vision</strong>, <em>2021-2025</em>, <em>York University</em>.</dd>
+  <dt><a href="https://csprofkgd.github.io/deep-learning-coursepage/">EECS 6322</a></dt>
+  <dd><strong>Deep Learning in Computer Vision</strong>, <em>York University</em>.</dd>
 
 </dl>
 
