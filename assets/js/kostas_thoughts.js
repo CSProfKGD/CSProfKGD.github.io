@@ -38,6 +38,55 @@
     return thoughts;
   }
 
+  function getCollapsedHeight(textNode) {
+    var styles = window.getComputedStyle(textNode);
+    var lineHeight = parseFloat(styles.lineHeight);
+    if (Number.isNaN(lineHeight)) {
+      lineHeight = parseFloat(styles.fontSize) * 1.62;
+    }
+    return lineHeight * 6;
+  }
+
+  function setThoughtExpansion(section, expanded) {
+    var textNode = section.querySelector("[data-thought-text]");
+    var toggle = section.querySelector("[data-thought-toggle]");
+    if (!textNode || !toggle || toggle.hidden) return;
+
+    textNode.classList.toggle("is-expanded", expanded);
+    textNode.classList.toggle("is-collapsed", !expanded);
+    toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+    toggle.textContent = expanded ? "Show less \u2191" : "Read more \u2192";
+  }
+
+  function resetThoughtExpansion(section) {
+    var textNode = section.querySelector("[data-thought-text]");
+    var toggle = section.querySelector("[data-thought-toggle]");
+    if (!textNode || !toggle) return;
+
+    textNode.classList.remove("is-collapsed", "is-expanded");
+    toggle.hidden = true;
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.textContent = "Read more \u2192";
+  }
+
+  function updateThoughtExpansion(section, preserveExpanded) {
+    var textNode = section.querySelector("[data-thought-text]");
+    var toggle = section.querySelector("[data-thought-toggle]");
+    if (!textNode || !toggle) return;
+
+    var wasExpanded = preserveExpanded && textNode.classList.contains("is-expanded");
+
+    resetThoughtExpansion(section);
+
+    window.requestAnimationFrame(function () {
+      var shouldCollapse = textNode.scrollHeight > getCollapsedHeight(textNode) + 2;
+      if (!shouldCollapse) return;
+
+      toggle.hidden = false;
+      setThoughtExpansion(section, wasExpanded);
+    });
+  }
+
   function renderThought(section, thoughts) {
     if (!thoughts.length) return;
 
@@ -50,6 +99,7 @@
     content.classList.add("is-changing");
 
     window.setTimeout(function () {
+      resetThoughtExpansion(section);
       textNode.textContent = thought.text;
       if (thought.date) {
         dateNode.textContent = thought.date;
@@ -60,6 +110,7 @@
       }
 
       window.requestAnimationFrame(function () {
+        updateThoughtExpansion(section, false);
         content.classList.remove("is-changing");
         window.setTimeout(function () {
           content.style.minHeight = "";
@@ -83,6 +134,7 @@
         if (!thoughts.length) return;
 
         var button = section.querySelector("[data-another-thought]");
+        var toggle = section.querySelector("[data-thought-toggle]");
 
         section.hidden = false;
         renderThought(section, thoughts);
@@ -92,6 +144,17 @@
             renderThought(section, thoughts);
           });
         }
+
+        if (toggle) {
+          toggle.addEventListener("click", function () {
+            var textNode = section.querySelector("[data-thought-text]");
+            setThoughtExpansion(section, !textNode.classList.contains("is-expanded"));
+          });
+        }
+
+        window.addEventListener("resize", function () {
+          updateThoughtExpansion(section, true);
+        });
       })
       .catch(function () {
         section.hidden = true;

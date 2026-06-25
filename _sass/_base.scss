@@ -269,10 +269,42 @@ blockquote {
     font-weight: 400;
     line-height: 1.62;
     min-height: 4.8em;
+    overflow: hidden;
+    transition: max-height 240ms ease;
+
+    &.is-collapsed {
+      max-height: calc(1lh * 6);
+      -webkit-mask-image: linear-gradient(to bottom, #000 72%, rgba(0, 0, 0, 0));
+      mask-image: linear-gradient(to bottom, #000 72%, rgba(0, 0, 0, 0));
+    }
+
+    &.is-expanded {
+      max-height: 80rem;
+    }
   }
 
   &.is-changing {
     opacity: 0;
+  }
+}
+
+.kostas-thoughts-toggle {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--global-theme-color);
+  font: inherit;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--global-hover-color);
+    text-decoration: underline;
   }
 }
 
@@ -334,6 +366,13 @@ html[data-theme='dark'] {
   .kostas-thoughts-card {
     border-color: rgba(255, 255, 255, 0.16);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kostas-thoughts-card,
+  .kostas-thoughts-card blockquote {
+    transition: none;
   }
 }
 
