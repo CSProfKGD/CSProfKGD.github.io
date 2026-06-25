@@ -54,6 +54,43 @@ blockquote {
   margin-left: 1rem;
   width: 100%;
 
+  .profile-social {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.85rem;
+    font-size: 1.35rem;
+
+    a {
+      line-height: 1;
+
+      i::before {
+        color: var(--global-text-color);
+        transition: color 0.2s ease-in-out;
+      }
+
+      .profile-x-icon {
+        color: var(--global-text-color);
+        font-size: 0.95em;
+        font-weight: 700;
+        transition: color 0.2s ease-in-out;
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        i::before {
+          color: var(--global-theme-color);
+        }
+
+        .profile-x-icon {
+          color: var(--global-theme-color);
+        }
+      }
+    }
+  }
+
   .address {
     margin-bottom: 5px;
     margin-top: 5px;
