@@ -7,7 +7,7 @@ nav: true
 ---
 
 <dl>
-  <dt><a href="https://www.eecs.yorku.ca/~kosta/Courses/EECS4422/">EECS 4422/5323</a></dt>
+  <dt><a href="https://csprofkgd.github.io/Computer-Vision-Coursepage/">EECS 4422/5323</a></dt>
   <dd><strong>Computer Vision</strong>, <em>York University</em>.</dd>
 
   <dt><a href="https://csprofkgd.github.io/deep-learning-coursepage/">EECS 6322</a></dt>
