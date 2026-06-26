@@ -114,9 +114,9 @@ blockquote {
 @media (max-width: 767px) {
   .profile {
     float: none !important;
-    width: 82%;
-    max-width: 300px;
-    margin: 0.65rem auto 1rem;
+    width: 74%;
+    max-width: 255px;
+    margin: 0.5rem auto 0.85rem;
     transition: width 180ms ease, max-width 180ms ease, margin 180ms ease;
 
     img {
@@ -145,6 +145,13 @@ blockquote {
   font-size: clamp(3rem, 4.2vw, 4.25rem);
   line-height: 1.05;
   letter-spacing: -0.02em;
+}
+
+@media (max-width: 767px) {
+  .post .post-title {
+    font-size: clamp(2.35rem, 10vw, 3rem);
+    line-height: 1.08;
+  }
 }
 
 .post .desc {
@@ -279,6 +286,12 @@ blockquote {
     display: flex;
     align-items: center;
     cursor: pointer;
+
+    .fa-moon,
+    .fa-sun {
+      padding-top: 0;
+      padding-left: 0;
+    }
   }
 }
 
