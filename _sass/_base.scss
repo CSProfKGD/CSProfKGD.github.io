@@ -111,6 +111,24 @@ blockquote {
   }
 }
 
+@media (max-width: 767px) {
+  .profile {
+    float: none !important;
+    width: 82%;
+    max-width: 300px;
+    margin: 0.65rem auto 1rem;
+    transition: width 180ms ease, max-width 180ms ease, margin 180ms ease;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      transition: width 180ms ease;
+    }
+  }
+}
+
 .post-description {
   margin-bottom: 2rem;
   font-size: 0.875rem;
@@ -133,6 +151,12 @@ blockquote {
   font-size: 1.05rem;
   line-height: 1.45;
   margin-bottom: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .post .desc {
+    margin-bottom: 0.85rem;
+  }
 }
 
 .post article {
