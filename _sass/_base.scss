@@ -291,6 +291,8 @@ blockquote {
     .fa-sun {
       padding-top: 0;
       padding-left: 0;
+      line-height: 1;
+      transform: translateY(-2px);
     }
   }
 }
