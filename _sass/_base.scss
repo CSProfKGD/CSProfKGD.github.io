@@ -270,6 +270,18 @@ blockquote {
   }
 }
 
+.mobile-toggle-container {
+  display: flex;
+  align-items: center;
+  margin-left: 0.75rem;
+
+  .js-light-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+}
+
 
 // News
 
