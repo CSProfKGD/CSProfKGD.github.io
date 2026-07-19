@@ -52,8 +52,104 @@
 
 <!-- Theming-->
 {% if site.enable_darkmode %}
-<script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
-<script src="{{ '/assets/js/dark_mode.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/theme.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+<script src="{{ '/assets/js/dark_mode.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>
+{% endif %}
+{% if page.url == "/talks/" or page.url == "/teaching/" %}
+<script>
+(function () {
+  function getAbstract(toggle) {
+    var card = toggle.closest(".course-card, .talk-card") || document;
+    return card.querySelector("[data-collapsible-abstract], [data-talk-abstract]");
+  }
+
+  function getCollapsedHeight(element) {
+    var styles = window.getComputedStyle(element);
+    var lineHeight = parseFloat(styles.lineHeight);
+    if (Number.isNaN(lineHeight)) lineHeight = parseFloat(styles.fontSize) * 1.62;
+    var lines = parseInt(element.getAttribute("data-collapse-lines") || "4", 10);
+    if (Number.isNaN(lines) || lines < 1) lines = 4;
+    return lineHeight * lines;
+  }
+
+  function getExpandedHeight(element) {
+    var clone = element.cloneNode(true);
+    clone.classList.remove("is-collapsed", "is-expanded");
+    clone.removeAttribute("style");
+    clone.style.position = "absolute";
+    clone.style.visibility = "hidden";
+    clone.style.pointerEvents = "none";
+    clone.style.height = "auto";
+    clone.style.maxHeight = "none";
+    clone.style.webkitMaskImage = "none";
+    clone.style.maskImage = "none";
+    clone.style.width = element.offsetWidth + "px";
+    element.parentNode.appendChild(clone);
+    var height = clone.scrollHeight;
+    clone.remove();
+    return height;
+  }
+
+  function setExpanded(abstractNode, toggle, expanded) {
+    abstractNode.classList.toggle("is-expanded", expanded);
+    abstractNode.classList.toggle("is-collapsed", !expanded);
+    toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+    toggle.textContent = expanded ? "Show less \u2191" : "Read more \u2192";
+  }
+
+  function updateCard(abstractNode, toggle, preserveExpanded) {
+    var forceCollapse = abstractNode.getAttribute("data-force-collapse") == "true";
+    var wasExpanded = preserveExpanded && abstractNode.classList.contains("is-expanded");
+    var collapsedHeight = getCollapsedHeight(abstractNode);
+    var expandedHeight = getExpandedHeight(abstractNode);
+    var shouldCollapse = forceCollapse || expandedHeight > collapsedHeight + 2;
+
+    abstractNode.style.setProperty("--collapsible-abstract-collapsed-height", collapsedHeight + "px");
+    abstractNode.style.setProperty("--collapsible-abstract-expanded-height", expandedHeight + "px");
+    abstractNode.style.setProperty("--talk-abstract-collapsed-height", collapsedHeight + "px");
+    abstractNode.style.setProperty("--talk-abstract-expanded-height", expandedHeight + "px");
+
+    if (!shouldCollapse) {
+      abstractNode.classList.remove("is-collapsed", "is-expanded");
+      toggle.hidden = true;
+      return;
+    }
+
+    toggle.hidden = false;
+    setExpanded(abstractNode, toggle, wasExpanded);
+  }
+
+  function initCollapsibleCards(preserveExpanded) {
+    var abstracts = document.querySelectorAll("[data-collapsible-abstract], [data-talk-abstract]");
+    abstracts.forEach(function (abstractNode) {
+      var card = abstractNode.closest(".course-card, .talk-card") || document;
+      var toggle = card.querySelector("[data-collapsible-toggle], [data-talk-toggle]");
+      if (toggle) updateCard(abstractNode, toggle, preserveExpanded);
+    });
+  }
+
+  document.addEventListener("click", function (event) {
+    var toggle = event.target.closest("[data-collapsible-toggle], [data-talk-toggle]");
+    if (!toggle) return;
+
+    var abstractNode = getAbstract(toggle);
+    if (!abstractNode) return;
+
+    event.preventDefault();
+    setExpanded(abstractNode, toggle, !abstractNode.classList.contains("is-expanded"));
+  });
+
+  if (document.readyState == "loading") {
+    document.addEventListener("DOMContentLoaded", function () { initCollapsibleCards(false); });
+  } else {
+    initCollapsibleCards(false);
+  }
+
+  window.addEventListener("load", function () { initCollapsibleCards(true); });
+  window.addEventListener("pageshow", function () { initCollapsibleCards(true); });
+  window.addEventListener("resize", function () { initCollapsibleCards(true); });
+})();
+</script>
 {% endif %}
 
 {% if site.enable_google_analytics %}

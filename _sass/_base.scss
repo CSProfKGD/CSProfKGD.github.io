@@ -317,6 +317,368 @@ blockquote {
   vertical-align: top;
 }
 
+// Teaching
+
+.courses {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 780px;
+}
+
+.course-card {
+  --course-card-bg: var(--global-bg-color);
+  --course-card-border: rgba(42, 74, 74, 0.14);
+  --course-card-shadow: rgba(40, 54, 48, 0.08);
+  --course-card-grid: transparent;
+  --course-card-title: var(--global-text-color);
+  --course-card-meta: var(--global-text-color-light);
+  --course-card-abstract: var(--global-text-color);
+  --course-card-accent: var(--global-theme-color);
+  --course-card-fade: var(--global-bg-color);
+  position: relative;
+  padding: 1.45rem 1.6rem;
+  overflow: hidden;
+  background: var(--course-card-bg);
+  border: 1px solid var(--course-card-border);
+  border-radius: 14px;
+  box-shadow: 0 14px 34px var(--course-card-shadow);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--course-card-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--course-card-grid) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.34;
+    pointer-events: none;
+  }
+
+  h2,
+  p,
+  a,
+  div,
+  button {
+    position: relative;
+    z-index: 1;
+  }
+
+  h2 {
+    margin: 0.15rem 0 0.25rem;
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+
+    a {
+      color: var(--course-card-title);
+
+      &:hover {
+        color: var(--course-card-accent);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.course-card-meta {
+  color: var(--course-card-meta);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: var(--course-card-accent);
+      text-decoration: none;
+    }
+  }
+}
+
+.course-card-abstract {
+  position: relative;
+  color: var(--course-card-abstract);
+  font-size: 1rem;
+  line-height: 1.65;
+  overflow: hidden;
+  transition: max-height 220ms ease;
+
+  p {
+    margin: 0;
+    color: inherit;
+  }
+
+  &.is-collapsed {
+    max-height: var(--collapsible-abstract-collapsed-height, 4.95em);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0, 0, 0, 0.15) 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0, 0, 0, 0.15) 82%, transparent 100%);
+  }
+
+  &.is-expanded {
+    max-height: var(--collapsible-abstract-expanded-height, none);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.course-card-toggle {
+  display: inline-flex;
+  margin: 0.55rem 0 0;
+  padding: 0;
+  color: var(--course-card-accent);
+  background: transparent;
+  border: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.3;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--global-hover-color);
+    text-decoration: none;
+  }
+}
+
+html[data-theme='dark'] .course-card {
+  --course-card-bg:
+    linear-gradient(145deg, rgba(17, 24, 39, 0.96), rgba(13, 20, 36, 0.98)),
+    var(--global-bg-color);
+  --course-card-border: rgba(148, 163, 184, 0.28);
+  --course-card-shadow: rgba(0, 0, 0, 0.18);
+  --course-card-grid: rgba(255, 255, 255, 0.035);
+  --course-card-title: #ffffff;
+  --course-card-meta: rgba(226, 232, 240, 0.68);
+  --course-card-abstract: rgba(226, 232, 240, 0.74);
+  --course-card-accent: #64f4cf;
+  --course-card-fade: rgba(13, 20, 36, 0.98);
+}
+
+@media (max-width: 767px) {
+  .course-card {
+    padding: 1.25rem 1.2rem;
+  }
+}
+
+// Talks
+
+.talks {
+  max-width: 780px;
+}
+
+.talk-card {
+  --talk-card-bg:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(252, 252, 252, 0.98)),
+    var(--global-bg-color);
+  --talk-card-border: rgba(42, 74, 74, 0.16);
+  --talk-card-shadow: rgba(40, 54, 48, 0.14);
+  --talk-card-grid: transparent;
+  --talk-card-title: #172033;
+  --talk-card-venues: rgba(51, 65, 85, 0.7);
+  --talk-card-abstract: rgba(51, 65, 85, 0.74);
+  --talk-card-accent: #0f766e;
+  --talk-card-accent-hover: #134e4a;
+  --talk-card-accent-bg: rgba(15, 118, 110, 0.08);
+  --talk-card-accent-border: rgba(15, 118, 110, 0.24);
+  --talk-card-button: rgba(30, 41, 59, 0.86);
+  --talk-card-button-hover: #0f172a;
+  --talk-card-button-border: rgba(51, 65, 85, 0.22);
+  --talk-card-fade: rgba(255, 255, 255, 0.98);
+  position: relative;
+  margin: 0.5rem 0 2rem;
+  padding: 2rem 2.25rem;
+  overflow: hidden;
+  background: var(--talk-card-bg);
+  border: 1px solid var(--talk-card-border);
+  border-radius: 14px;
+  box-shadow: 0 18px 42px var(--talk-card-shadow);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--talk-card-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--talk-card-grid) 1px, transparent 1px);
+    background-size: 72px 72px;
+    opacity: 0.34;
+    pointer-events: none;
+  }
+
+  h2,
+  p,
+  a,
+  span {
+    position: relative;
+    z-index: 1;
+  }
+
+  h2 {
+    max-width: 620px;
+    margin: 1.45rem 0 0.65rem;
+    color: var(--talk-card-title);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+}
+
+.talk-card-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.talk-card-year {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.6rem;
+  padding: 0.65rem 0.85rem;
+  color: var(--talk-card-accent);
+  background: var(--talk-card-accent-bg);
+  border: 1px solid var(--talk-card-accent-border);
+  border-radius: 0.7rem;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+
+.talk-card-venues {
+  max-width: 660px;
+  margin: 0 0 1.25rem;
+  color: var(--talk-card-venues);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.talk-card-abstract {
+  position: relative;
+  z-index: 1;
+  max-width: 660px;
+  margin-bottom: 1.35rem;
+  color: var(--talk-card-abstract);
+  font-size: 1.02rem;
+  line-height: 1.68;
+  overflow: hidden;
+  transition: max-height 240ms ease;
+
+  p {
+    margin: 0;
+    color: inherit;
+  }
+
+  &.is-collapsed {
+    max-height: var(--talk-abstract-collapsed-height, 6.72em);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0, 0, 0, 0.15) 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 58%, rgba(0, 0, 0, 0.15) 82%, transparent 100%);
+  }
+
+  &.is-expanded {
+    max-height: var(--talk-abstract-expanded-height, none);
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.talk-card-toggle {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  margin: 0.55rem 0 1.45rem;
+  padding: 0;
+  color: var(--talk-card-accent);
+  background: transparent;
+  border: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--talk-card-accent-hover);
+    text-decoration: none;
+  }
+}
+
+.talk-card-links {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 5.6rem;
+    padding: 0.48rem 1.05rem;
+    color: var(--talk-card-button);
+    border: 1px solid var(--talk-card-button-border);
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 750;
+    line-height: 1.25;
+    transition: border-color 140ms ease, color 140ms ease, transform 140ms ease;
+
+    &:hover {
+      color: var(--talk-card-button-hover);
+      border-color: var(--talk-card-accent-border);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+  }
+}
+
+html[data-theme='dark'] .talk-card {
+  --talk-card-bg:
+    linear-gradient(145deg, rgba(17, 24, 39, 0.96), rgba(13, 20, 36, 0.98)),
+    var(--global-bg-color);
+  --talk-card-border: rgba(148, 163, 184, 0.28);
+  --talk-card-shadow: rgba(0, 0, 0, 0.18);
+  --talk-card-grid: rgba(255, 255, 255, 0.035);
+  --talk-card-title: #ffffff;
+  --talk-card-venues: rgba(226, 232, 240, 0.68);
+  --talk-card-abstract: rgba(226, 232, 240, 0.74);
+  --talk-card-accent: #64f4cf;
+  --talk-card-accent-hover: #ffffff;
+  --talk-card-accent-bg: rgba(100, 244, 207, 0.1);
+  --talk-card-accent-border: rgba(100, 244, 207, 0.28);
+  --talk-card-button: rgba(226, 232, 240, 0.9);
+  --talk-card-button-hover: #ffffff;
+  --talk-card-button-border: rgba(148, 163, 184, 0.32);
+  --talk-card-fade: rgba(13, 20, 36, 0.98);
+}
+
+@media (max-width: 767px) {
+  .talk-card {
+    padding: 1.45rem 1.35rem;
+  }
+
+  .talk-card-header {
+    justify-content: flex-start;
+  }
+
+  .talk-card-year {
+    min-width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .talk-card-abstract {
+    transition: none;
+  }
+}
+
 // Kostas Thoughts
 
 .kostas-thoughts {

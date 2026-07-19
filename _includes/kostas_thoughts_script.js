@@ -1,4 +1,7 @@
 (function () {
+  var thoughtsCache = null;
+  var isLoading = false;
+
   function cleanThoughtText(text) {
     return String(text || "")
       .replace(/^\s*#KostasThoughts\s*:?\s*/i, "")
@@ -90,7 +93,7 @@
   function renderThought(section, thoughts) {
     if (!thoughts.length) return;
 
-    const thought = thoughts[Math.floor(Math.random() * thoughts.length)];
+    var thought = thoughts[Math.floor(Math.random() * thoughts.length)];
     var textNode = section.querySelector("[data-thought-text]");
     var dateNode = section.querySelector("[data-thought-date]");
     var content = section.querySelector(".kostas-thoughts-card");
@@ -119,45 +122,122 @@
     }, 120);
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function getEmbeddedThoughtsData() {
+    var dataNode = document.getElementById("kostas-thoughts-data");
+    if (!dataNode) return null;
+
+    try {
+      return JSON.parse(dataNode.textContent || "{}");
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function hydrateThoughts(section, data) {
+    var thoughts = parseThoughts(data);
+    if (!thoughts.length) return false;
+    thoughtsCache = thoughts;
+
+    var button = section.querySelector("[data-another-thought]");
+    var toggle = section.querySelector("[data-thought-toggle]");
+
+    section.hidden = false;
+    section.setAttribute("data-thoughts-ready", "true");
+    renderThought(section, thoughts);
+
+    if (button && button.getAttribute("data-thoughts-bound") != "true") {
+      button.setAttribute("data-thoughts-bound", "true");
+      button.addEventListener("click", function () {
+        renderThought(section, thoughtsCache || thoughts);
+      });
+    }
+
+    if (toggle && toggle.getAttribute("data-thoughts-bound") != "true") {
+      toggle.setAttribute("data-thoughts-bound", "true");
+      toggle.addEventListener("click", function () {
+        var textNode = section.querySelector("[data-thought-text]");
+        setThoughtExpansion(section, !textNode.classList.contains("is-expanded"));
+      });
+    }
+
+    if (section.getAttribute("data-resize-bound") != "true") {
+      section.setAttribute("data-resize-bound", "true");
+      window.addEventListener("resize", function () {
+        updateThoughtExpansion(section, true);
+      });
+    }
+
+    return true;
+  }
+
+  function loadThoughts(source, onSuccess, onFailure) {
+    if (typeof XMLHttpRequest == "undefined") {
+      onFailure();
+      return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    var cacheBustedSource = source + (source.indexOf("?") == -1 ? "?" : "&") + "v=" + Date.now();
+
+    xhr.open("GET", cacheBustedSource, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState != 4) return;
+
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          onSuccess(JSON.parse(xhr.responseText));
+        } catch (error) {
+          onFailure();
+        }
+        return;
+      }
+
+      onFailure();
+    };
+    xhr.onerror = onFailure;
+    xhr.send();
+  }
+
+  function initKostasThoughts() {
     var section = document.querySelector("[data-kostas-thoughts]");
     if (!section) return;
+    if (section.getAttribute("data-thoughts-ready") == "true" && thoughtsCache) return;
+    if (isLoading) return;
+
+    var embeddedData = getEmbeddedThoughtsData();
+    if (embeddedData && hydrateThoughts(section, embeddedData)) return;
+
     var source = section.getAttribute("data-source") || "/kostas-thoughts/posts.json";
+    isLoading = true;
 
-    fetch(source, { credentials: "same-origin", cache: "no-store" })
-      .then(function (response) {
-        if (!response.ok) throw new Error("Thought source unavailable");
-        return response.json();
-      })
-      .then(function (data) {
-        var thoughts = parseThoughts(data);
-        if (!thoughts.length) return;
+    loadThoughts(
+      source,
+      function (data) {
+        hydrateThoughts(section, data);
+        isLoading = false;
+      },
+      function () {
+        isLoading = false;
+      }
+    );
+  }
 
-        var button = section.querySelector("[data-another-thought]");
-        var toggle = section.querySelector("[data-thought-toggle]");
+  if (document.readyState == "loading") {
+    document.addEventListener("DOMContentLoaded", initKostasThoughts);
+  } else {
+    initKostasThoughts();
+  }
 
-        section.hidden = false;
-        renderThought(section, thoughts);
+  window.addEventListener("pageshow", function () {
+    var section = document.querySelector("[data-kostas-thoughts]");
+    if (!section) return;
 
-        if (button) {
-          button.addEventListener("click", function () {
-            renderThought(section, thoughts);
-          });
-        }
-
-        if (toggle) {
-          toggle.addEventListener("click", function () {
-            var textNode = section.querySelector("[data-thought-text]");
-            setThoughtExpansion(section, !textNode.classList.contains("is-expanded"));
-          });
-        }
-
-        window.addEventListener("resize", function () {
-          updateThoughtExpansion(section, true);
-        });
-      })
-      .catch(function () {
-        section.hidden = true;
+    if (section.hidden || section.getAttribute("data-thoughts-ready") != "true") {
+      initKostasThoughts();
+    } else {
+      window.requestAnimationFrame(function () {
+        updateThoughtExpansion(section, true);
       });
+    }
   });
 })();

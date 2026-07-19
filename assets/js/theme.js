@@ -1,6 +1,6 @@
 // Has to be in the head tag, otherwise a flicker effect will occur.
 
-let toggleTheme = (theme) => {
+var toggleTheme = (theme) => {
   if (theme == "dark") {
     setTheme("light");
   } else {
@@ -9,13 +9,14 @@ let toggleTheme = (theme) => {
 }
 
 
-let setTheme = (theme) =>  {
+var setTheme = (theme) =>  {
   transTheme();
-  if (theme) {
+  if (theme && theme != "light") {
     document.documentElement.setAttribute("data-theme", theme);
   }
   else {
     document.documentElement.removeAttribute("data-theme");
+    theme = "light";
   }
   localStorage.setItem("theme", theme);
   
@@ -29,7 +30,7 @@ let setTheme = (theme) =>  {
 };
 
 
-let transTheme = () => {
+var transTheme = () => {
   document.documentElement.classList.add("transition");
   window.setTimeout(() => {
     document.documentElement.classList.remove("transition");
@@ -37,8 +38,8 @@ let transTheme = () => {
 }
 
 
-let initTheme = (theme) => {
-  if (theme == null) {
+var initTheme = (theme) => {
+  if (theme == null || theme == "null") {
     const userPref = window.matchMedia;
     if (userPref && userPref('(prefers-color-scheme: dark)').matches) {
         theme = 'dark';
@@ -47,5 +48,9 @@ let initTheme = (theme) => {
   setTheme(theme);
 }
 
+
+window.toggleTheme = toggleTheme;
+window.setTheme = setTheme;
+window.initTheme = initTheme;
 
 initTheme(localStorage.getItem("theme"));

@@ -1,14 +1,19 @@
-<section class="kostas-thoughts" data-kostas-thoughts data-source="https://csprofkgd.github.io/kostas-thoughts/posts.json" hidden>
+{% assign fallback_thought = site.data.kostas_thoughts.posts | first %}
+{% assign fallback_text = fallback_thought.text | replace: '#KostasThoughts : ', '' | replace: '#KostasThoughts: ', '' | replace: '#KostasThoughts ', '' | split: ' http' | first | split: ' pic.twitter.com' | first | strip %}
+<section class="kostas-thoughts" data-kostas-thoughts data-source="https://csprofkgd.github.io/kostas-thoughts/posts.json">
   <div class="kostas-thoughts-card">
     <h2>#KostasThoughts</h2>
     <div class="kostas-thoughts-mark" aria-hidden="true">&#10077;</div>
-    <blockquote data-thought-text></blockquote>
+    <blockquote data-thought-text>{{ fallback_text }}</blockquote>
     <button class="kostas-thoughts-toggle" type="button" data-thought-toggle aria-expanded="false" hidden>Read more &rarr;</button>
-    <p class="kostas-thoughts-date" data-thought-date hidden></p>
+    <p class="kostas-thoughts-date" data-thought-date>{{ fallback_thought.date | date: "%B %Y" }}</p>
     <div class="kostas-thoughts-actions">
-      <a href="{{ '/kostas-thoughts/' | relative_url }}">View all thoughts &rarr;</a>
+      <a href="https://csprofkgd.github.io/kostas-thoughts/">View all thoughts &rarr;</a>
       <button type="button" data-another-thought>Surprise me &#8635;</button>
     </div>
   </div>
 </section>
-<script defer src="{{ '/assets/js/kostas_thoughts.js' | relative_url }}"></script>
+<script type="application/json" id="kostas-thoughts-data">{{ site.data.kostas_thoughts | jsonify }}</script>
+<script>
+{% include kostas_thoughts_script.js %}
+</script>

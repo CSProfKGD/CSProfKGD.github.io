@@ -1,9 +1,13 @@
-$(document).ready(function() {
-    const mode_toggles = document.querySelectorAll(".js-light-toggle");
+function handleThemeToggleClick(event) {
+    const mode_toggle = event.target.closest(".js-light-toggle");
+    if (!mode_toggle) return;
 
-    mode_toggles.forEach(function(mode_toggle) {
-        mode_toggle.addEventListener("click", function() {
-            toggleTheme(localStorage.getItem("theme"));
-        });
-    });
+    event.preventDefault();
+    window.toggleTheme(localStorage.getItem("theme"));
+}
+
+document.addEventListener("click", handleThemeToggleClick);
+
+window.addEventListener("pageshow", function () {
+    window.setTheme(localStorage.getItem("theme"));
 });
